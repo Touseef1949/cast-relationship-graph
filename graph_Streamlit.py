@@ -132,7 +132,7 @@ def get_agent_team(api_key: str):
     Creates the agent team. Cached to prevent re-initialization on every rerun.
     We pass api_key to ensure cache invalidation if key changes.
     """
-    model_instance = DeepSeek(id="deepseek-chat", api_key=api_key)
+    model_instance = DeepSeek(id="deepseek-v4-flash", api_key=api_key)
     
     coordinator = Agent(
         name="Cast Graph Coordinator",
