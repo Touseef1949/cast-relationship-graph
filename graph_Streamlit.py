@@ -43,21 +43,38 @@ with st.sidebar:
     st.header("🔐 Configuration")
     
     load_dotenv()
-    env_deepseek = os.getenv("DEEPSEEK_API_KEY")
-    env_tmdb = os.getenv("TMDB_TOKEN")
     
-    deepseek_api_key = st.text_input(
-        "DeepSeek API Key", 
-        value=env_deepseek if env_deepseek else "", 
-        type="password",
-        help="Get this from platform.deepseek.com"
-    )
-    tmdb_token = st.text_input(
-        "TMDb Token (v4 Bearer)", 
-        value=env_tmdb if env_tmdb else "", 
-        type="password",
-        help="Get this from themoviedb.org settings"
-    )
+    # Load secrets from Streamlit Cloud first, fallback to .env for local dev
+    try:
+        secret_deepseek = st.secrets["DEEPSEEK_API_KEY"]
+    except Exception:
+        secret_deepseek = os.getenv("DEEPSEEK_API_KEY", "")
+    
+    try:
+        secret_tmdb = st.secrets["TMDB_TOKEN"]
+    except Exception:
+        secret_tmdb = os.getenv("TMDB_TOKEN", "")
+    
+    # Only show API key fields for local dev (no secrets available)
+    if not secret_deepseek:
+        deepseek_api_key = st.text_input(
+            "DeepSeek API Key", 
+            type="password",
+            help="Get this from platform.deepseek.com"
+        )
+    else:
+        deepseek_api_key = secret_deepseek
+        st.success("🔑 DeepSeek connected via secure secrets")
+    
+    if not secret_tmdb:
+        tmdb_token = st.text_input(
+            "TMDb Token (v4 Bearer)", 
+            type="password",
+            help="Get this from themoviedb.org settings"
+        )
+    else:
+        tmdb_token = secret_tmdb
+        st.success("🔑 TMDb connected via secure secrets")
     
     if deepseek_api_key:
         os.environ["DEEPSEEK_API_KEY"] = deepseek_api_key
