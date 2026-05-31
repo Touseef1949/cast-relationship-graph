@@ -295,5 +295,9 @@ def main():
             except IndexError:
                 st.warning("Mermaid block was detected but could not be parsed.")
 
+
+---
+<p style="text-align:center; color:#888; font-size:0.85rem;">🎬 Built by <a href="https://touseefshaik.com" target="_blank">Touseef Shaik</a></p>
+
 if __name__ == "__main__":
     main()
