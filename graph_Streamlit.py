@@ -296,8 +296,8 @@ def main():
                 st.warning("Mermaid block was detected but could not be parsed.")
 
 
----
-<p style="text-align:center; color:#888; font-size:0.85rem;">🎬 Built by <a href="https://touseefshaik.com" target="_blank">Touseef Shaik</a></p>
+st.markdown("---")
+st.markdown("<p style='text-align:center; color:#888; font-size:0.85rem;'>🎬 Built by <a href='https://touseefshaik.com' target='_blank'>Touseef Shaik</a></p>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
